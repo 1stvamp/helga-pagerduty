@@ -1,2 +1,2 @@
 # helga-pagerduty
-A helga IRC bot webhook plugin for PagerDuty alerts
+A [helga IRC bot](https://helga.readthedocs.org/) webhook plugin for [PagerDuty](https://pagerduty.com/) alerts.
