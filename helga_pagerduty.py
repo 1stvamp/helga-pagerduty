@@ -10,7 +10,7 @@ logger = log.getLogger(__name__)
 # These are the only message types we care about
 TYPE_MAP = {
     'incident.trigger': 'triggered',
-    'incident.acknowledge': 'acknowledged',
+    'incident.acknowledge': 'acknowledged by',
     'incident.unacknowledge': 'unacknowledged due to timeout',
     'incident.resolve': 'resolved',
 }
@@ -35,11 +35,11 @@ def announce(request, irc_client, channel):
     if message['type'] not in TYPE_MAP:
         return 'No messages sent'
 
-    if message['type'] == 'incident.acknowledged':
-        _type = 'acknowledged by {}'.format(
+    _type = TYPE_MAP[message['type']]
+    if message['type'] == 'incident.acknowledge':
+        _type = '{} {}'.format(,
+            _type,
             message['data']['incident']['assigned_to_user'])
-    else:
-        _type = TYPE_MAP[message['type']]
 
     description = 'PagerDuty alert {}: {} for {} {}'.format(
         _type,
