@@ -35,8 +35,14 @@ def announce(request, irc_client, channel):
     if message['type'] not in TYPE_MAP:
         return 'No messages sent'
 
+    if message['type'] == 'incident.acknowledged':
+        _type = 'acknowledged by {}'.format(
+            message['data']['incident']['assigned_to_user'])
+    else:
+        _type = TYPE_MAP[message['type']]
+
     description = 'PagerDuty alert {}: {} for {} {}'.format(
-        TYPE_MAP[message['type']],
+        _type,
         message['data']['incident']['trigger_summary_data']['subject'],
         message['data']['incident']['service']['name'],
         message['data']['incident']['html_url'],
