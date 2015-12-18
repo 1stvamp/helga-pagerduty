@@ -37,9 +37,9 @@ def announce(request, irc_client, channel):
 
     _type = TYPE_MAP[message['type']]
     if message['type'] == 'incident.acknowledge':
-        _type = '{} {}'.format(,
+        _type = '{} {}'.format(
             _type,
-            message['data']['incident']['assigned_to_user'])
+            message['data']['incident']['assigned_to_user']['name'])
 
     description = 'PagerDuty alert {}: {} for {} {}'.format(
         _type,
