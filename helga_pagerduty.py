@@ -41,9 +41,18 @@ def announce(request, irc_client, channel):
             _type,
             message['data']['incident']['assigned_to_user']['name'])
 
+    # possible fields holding the description/subject of the incident
+    description_fields = ('subject', 'description')
+    summary_data = message['data']['incident']['trigger_summary_data']
+    incident_desc = 'N/A'
+    for field in description_fields:
+        if field in summary_data:
+            incident_desc = summary_data[field]
+            break
+
     description = 'PagerDuty alert {}: {} for {} {}'.format(
         _type,
-        message['data']['incident']['trigger_summary_data']['subject'],
+        incident_desc,
         message['data']['incident']['service']['name'],
         message['data']['incident']['html_url'],
     )
